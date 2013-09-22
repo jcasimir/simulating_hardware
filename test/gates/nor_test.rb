@@ -1,25 +1,9 @@
-require 'bundler'
-Bundler.require
-gem 'minitest'
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/signals'
+require './test/test_helper'
 require './lib/gates/nor_gate'
 
-class NorGateTest < MiniTest::Unit::TestCase
-
-  include Hardware::Signals
-
+class NorGateTest < GateTest
   def gate
     @gate ||= NorGate.new
-  end
-
-  def assert_high(pin)
-    assert_equal HIGH, pin
-  end
-
-  def assert_low(pin)
-    assert_equal LOW, pin
   end
 
   def test_it_outputs_true_when_inputs_are_low
