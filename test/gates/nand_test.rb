@@ -30,4 +30,11 @@ class NandGateTest < GateTest
     assert_low gate.output
   end
 
+  def test_it_accepts_pin_status_on_initialize
+    g2 = Gates::Nand.new(input_a: HIGH, input_b: HIGH)
+    assert_high g2.input_a
+    assert_high g2.input_b
+    assert_low g2.output
+  end
+
 end
