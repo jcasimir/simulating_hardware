@@ -7,6 +7,10 @@ module Gates
 
     include Hardware::Signals
 
+    def initialize(input = LOW)
+      @input = input
+    end
+
     def output
       gates.output
     end
