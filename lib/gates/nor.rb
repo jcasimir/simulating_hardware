@@ -1,11 +1,14 @@
 require './lib/signals'
+require './lib/gates/nand'
 
-class Nor
-  attr_accessor :input_a, :input_b
+module Gates
+  class Nor
+    attr_accessor :input_a, :input_b
 
-  include Hardware::Signals
+    include Hardware::Signals
 
-  def output
-    (input_b + input_a == LOW) ? HIGH : LOW
+    def output
+      (input_b + input_a == LOW) ? HIGH : LOW
+    end
   end
 end
