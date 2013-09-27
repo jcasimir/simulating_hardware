@@ -7,6 +7,11 @@ module Gates
 
     include Hardware::Signals
 
+    def initialize(inputs = {})
+      @input_a = inputs[:input_a]
+      @input_b = inputs[:input_b]
+    end
+
     def output
       n1 = a_nand_b = Nand.new(input_a: input_a, input_b: input_b)
       a_nand_n1 = Nand.new(input_a: input_a, input_b: n1.output)
