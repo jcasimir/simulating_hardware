@@ -1,9 +1,9 @@
 require './test/test_helper'
-require './lib/gates/nor_gate'
+require './lib/gates/nor'
 
-class NorGateTest < GateTest
+class NorTest < GateTest
   def gate
-    @gate ||= NorGate.new
+    @gate ||= Nor.new
   end
 
   def test_it_outputs_true_when_inputs_are_low
