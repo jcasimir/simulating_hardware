@@ -1,3 +1,4 @@
+require './lib/signals'
 require './lib/gates/nand'
 
 module Gates

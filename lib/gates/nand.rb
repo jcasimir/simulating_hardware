@@ -1,3 +1,5 @@
+require './lib/signals'
+
 module Gates
   class Nand
     attr_accessor :input_a, :input_b

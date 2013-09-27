@@ -1,3 +1,6 @@
+require './lib/signals'
+require './lib/gates/nand'
+
 module Gates
   class Not
     attr_accessor :input

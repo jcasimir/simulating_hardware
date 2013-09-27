@@ -3,7 +3,7 @@ require './lib/gates/nor'
 
 class NorTest < GateTest
   def gate
-    @gate ||= Nor.new
+    @gate ||= Gates::Nor.new
   end
 
   def test_it_outputs_true_when_inputs_are_low
