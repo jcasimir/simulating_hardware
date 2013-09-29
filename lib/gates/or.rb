@@ -14,10 +14,10 @@ module Gates
     end
 
     def output
-      not_a = Not.new(input_a)
-      not_b = Not.new(input_b)
-      nand = Nand.new(input_a: not_a.output, input_b: not_b.output)
-      nand.output
+      a_nand_a = Nand.new(input_a: input_a, input_b: input_a)
+      b_nand_b = Nand.new(input_a: input_b, input_b: input_b)
+      n3 = Nand.new(input_a: a_nand_a.output, input_b: b_nand_b.output)
+      n3.output
     end
   end
 end
