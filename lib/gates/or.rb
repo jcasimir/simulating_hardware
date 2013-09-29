@@ -1,6 +1,5 @@
 require './lib/signals'
 require './lib/gates/nand'
-require './lib/gates/not'
 
 module Gates
   class Or
