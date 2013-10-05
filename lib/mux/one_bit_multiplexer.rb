@@ -4,7 +4,7 @@ module Mux
   class OneBitMultiplexer
     attr_accessor :input_a, :input_b, :control
 
-    include Hardware::Signals
+    include Helpers::Signals
 
     def output
       Gates::Or.new(input_a: input_a_and_not_control, input_b: input_b_and_control).output

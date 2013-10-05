@@ -1,4 +1,4 @@
-require './lib/signals'
+require './lib/helpers/signals'
 require './lib/gates/nand'
 require './lib/gates/not'
 
@@ -6,7 +6,7 @@ module Gates
   class Or
     attr_accessor :input_a, :input_b
 
-    include Hardware::Signals
+    include Helpers::Signals
 
     def initialize(args = {})
       @input_a = args[:input_a]

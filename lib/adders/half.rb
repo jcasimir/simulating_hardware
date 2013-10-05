@@ -1,4 +1,4 @@
-require './lib/signals'
+require './lib/helpers/signals'
 require './lib/gates/xor'
 require './lib/gates/and'
 
@@ -6,7 +6,7 @@ module Adders
   class Half
     attr_accessor :input_a, :input_b
 
-    include Hardware::Signals
+    include Helpers::Signals
 
     def sum
       Gates::Xor.new(input_a: input_a, input_b: input_b).output

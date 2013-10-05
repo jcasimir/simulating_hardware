@@ -1,4 +1,4 @@
-require './lib/signals'
+require './lib/helpers/signals'
 require './lib/gates/xor'
 require './lib/gates/and'
 require './lib/gates/or'
@@ -7,7 +7,7 @@ module Adders
   class Full
     attr_accessor :input_a, :input_b, :carry_in
 
-    include Hardware::Signals
+    include Helpers::Signals
 
     def sum
       Gates::Xor.new(input_a: xor_a_b, input_b: carry_in).output

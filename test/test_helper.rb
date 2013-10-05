@@ -3,11 +3,11 @@ Bundler.require
 gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/signals'
+require './lib/helpers/signals'
 
 class GateTest < MiniTest::Unit::TestCase
 
-  include Hardware::Signals
+  include Helpers::Signals
 
   def assert_high(pin)
     assert_equal HIGH, pin

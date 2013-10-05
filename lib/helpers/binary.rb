@@ -1,6 +1,6 @@
 module Helpers
   class Binary
-    include Hardware::Signals
+    include Helpers::Signals
 
     attr_reader :value
 

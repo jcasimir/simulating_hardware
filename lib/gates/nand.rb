@@ -1,10 +1,10 @@
-require './lib/signals'
+require './lib/helpers/signals'
 
 module Gates
   class Nand
     attr_accessor :input_a, :input_b
 
-    include Hardware::Signals
+    include Helpers::Signals
 
     def initialize(inputs = {})
       self.input_a = inputs[:input_a]
