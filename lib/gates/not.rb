@@ -8,6 +8,7 @@ module Gates
     include Hardware::Signals
 
     def initialize(input = LOW)
+      raise ArgumentError.new("Invalid input") unless SIGNALS.include?(input)
       @input = input
     end
 
