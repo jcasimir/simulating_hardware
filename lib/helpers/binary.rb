@@ -1,0 +1,32 @@
+module Helpers
+  class Binary
+    include Hardware::Signals
+
+    attr_reader :value
+
+    def initialize(input)
+      @value = input
+    end
+
+    def to_s
+      value
+    end
+
+    def bits
+      value.reverse.split('').collect{|bit| convert(bit)}
+    end
+
+    def ==(other)
+      self.bits == other.bits
+    end
+
+  private
+    def convert(bit)
+      if bit.to_i == HIGH
+        HIGH
+      else
+        LOW
+      end
+    end
+  end
+end
