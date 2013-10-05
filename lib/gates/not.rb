@@ -1,11 +1,11 @@
-require './lib/signals'
+require './lib/helpers/signals'
 require './lib/gates/nand'
 
 module Gates
   class Not
     attr_accessor :input
 
-    include Hardware::Signals
+    include Helpers::Signals
 
     def initialize(input = LOW)
       raise ArgumentError.new("Invalid input") unless SIGNALS.include?(input)

@@ -1,4 +1,4 @@
-module Hardware
+module Helpers
   module Signals
     LOW     = 0
     HIGH    = 1
