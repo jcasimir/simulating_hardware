@@ -5,7 +5,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/helpers/signals'
 
-class GateTest < MiniTest::Unit::TestCase
+class GateTest < Minitest::Test
 
   include Helpers::Signals
 
