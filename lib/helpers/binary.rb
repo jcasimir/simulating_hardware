@@ -8,6 +8,10 @@ module Helpers
       @value = input
     end
 
+    def self.from_bits(input)
+      new(input.join)
+    end
+
     def to_s
       value
     end
