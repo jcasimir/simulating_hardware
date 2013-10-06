@@ -25,6 +25,12 @@ class RippleAdderTest < GateTest
     assert_equal Helpers::Binary.new('00000010'), adder.output
   end
 
+  def test_overflow_does_not_error
+    adder.input_a = Helpers::Binary.new('00000001')
+    adder.input_b = Helpers::Binary.new('11111111')
+    assert_equal Helpers::Binary.new('00000000'), adder.output
+  end
+
   def test_sixteen_bit_adders
     skip
   end
