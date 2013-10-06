@@ -12,7 +12,6 @@ class IncrementerTest < GateTest
   end
 
   def test_it_overflows_without_complaint
-    skip
     incrementer.input = Helpers::Binary.new('1111')
     assert_equal Helpers::Binary.new('0000'), incrementer.output
   end
