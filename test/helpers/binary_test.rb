@@ -24,4 +24,10 @@ class BinaryTest < GateTest
     b = Helpers::Binary.new('101010')
     assert_equal a, b
   end
+
+  def test_it_allows_spaces_in_the_input_string
+    a = Helpers::Binary.new('10 10 10')
+    b = Helpers::Binary.new('101010')
+    assert_equal a, b
+  end
 end

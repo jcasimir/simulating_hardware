@@ -13,7 +13,7 @@ module Helpers
     end
 
     def bits
-      value.reverse.split('').collect{|bit| convert(bit)}
+      value.reverse.scan(/\d/).collect{|bit| convert(bit)}
     end
 
     def ==(other)
