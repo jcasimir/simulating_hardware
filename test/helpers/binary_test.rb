@@ -30,4 +30,10 @@ class BinaryTest < GateTest
     b = Helpers::Binary.new('101010')
     assert_equal a, b
   end
+
+  def test_it_builds_representations_from_arrays_of_bits
+    a = Helpers::Binary.new('10 10 10')
+    b = Helpers::Binary.from_bits([1, 0, 1, 0, 1, 0])
+    assert_equal a, b
+  end
 end
