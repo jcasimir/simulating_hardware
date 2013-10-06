@@ -12,4 +12,20 @@ class RippleAdderTest < GateTest
     adder.input_b = Helpers::Binary.new('00000000')
     assert_equal Helpers::Binary.new('00000000'), adder.output
   end
+
+  def test_add_one_to_zero
+    adder.input_a = Helpers::Binary.new('00000000')
+    adder.input_b = Helpers::Binary.new('00000001')
+    assert_equal Helpers::Binary.new('00000001'), adder.output
+  end
+
+  def test_add_one_to_one
+    adder.input_a = Helpers::Binary.new('00000001')
+    adder.input_b = Helpers::Binary.new('00000001')
+    assert_equal Helpers::Binary.new('00000010'), adder.output
+  end
+
+  def test_sixteen_bit_adders
+    skip
+  end
 end
