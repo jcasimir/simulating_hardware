@@ -1,7 +1,6 @@
 module Adders
   class Ripple
-    attr_accessor :input_a, :input_b
-    attr_reader :size
+    attr_reader :size, :input_a, :input_b
 
     include Helpers::Signals
 
@@ -13,7 +12,21 @@ module Adders
       Helpers::Binary.from_bits(adders_output)
     end
 
+    def input_a=(input)
+      raise ArgumentError unless validate_size_of(input)
+      @input_a = input
+    end
+
+    def input_b=(input)
+      raise ArgumentError unless validate_size_of(input)
+      @input_b = input 
+    end
+
   private
+    def validate_size_of(input)
+      size == input.size
+    end
+
     def adders
       @adders ||= build_adders
     end

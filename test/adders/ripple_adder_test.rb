@@ -31,7 +31,22 @@ class RippleAdderTest < GateTest
     assert_equal Helpers::Binary.new('00000000'), adder.output
   end
 
-  def test_sixteen_bit_adders
-    skip
+  def test_adders_work_as_expected_at_a_size_of_16
+    big_adder = Adders::Ripple.new(16)
+    big_adder.input_a = Helpers::Binary.new('0000 0000 0000 0001')
+    big_adder.input_b = Helpers::Binary.new('1111 1111 1111 1111')
+    assert_equal Helpers::Binary.new('0000 0000 0000 0000'), big_adder.output
+  end
+
+  def test_adders_ensure_the_proper_sized_input_a
+    assert_raises(ArgumentError) do 
+      adder.input_a = Helpers::Binary.new('0000 0000 0000 0001')
+    end
+  end
+
+  def test_adders_ensure_the_proper_sized_input_b
+    assert_raises(ArgumentError) do 
+      adder.input_b = Helpers::Binary.new('0000 0000 0000 0001')
+    end
   end
 end
