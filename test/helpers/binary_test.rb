@@ -36,4 +36,8 @@ class BinaryTest < GateTest
     b = Helpers::Binary.from_bits([1, 0, 1, 0, 1, 0])
     assert_equal a, b
   end
+
+  def test_it_exposes_the_bit_size
+    assert_equal 4, Helpers::Binary.new("0000").size
+  end
 end

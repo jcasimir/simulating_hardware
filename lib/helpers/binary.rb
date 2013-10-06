@@ -24,6 +24,10 @@ module Helpers
       self.bits == other.bits
     end
 
+    def size
+      bits.size
+    end
+
   private
     def convert(bit)
       if bit.to_i == HIGH
