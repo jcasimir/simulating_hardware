@@ -10,6 +10,10 @@ module Mux
       Gates::Or.new(input_a: input_a_and_not_control, input_b: input_b_and_control).output
     end
 
+    def state
+      {input_a: input_a, input_b: input_b, control: control, output: output}
+    end
+
   private
     def not_control
       Gates::Not.new(control).output
