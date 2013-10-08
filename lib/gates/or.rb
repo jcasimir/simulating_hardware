@@ -7,9 +7,9 @@ module Gates
 
     include Helpers::Signals
 
-    def initialize(args = {})
-      @input_a = args[:input_a]
-      @input_b = args[:input_b]
+    def initialize(inputs = {})
+      @input_a = inputs[:input_a]
+      @input_b = inputs[:input_b]
     end
 
     def output
