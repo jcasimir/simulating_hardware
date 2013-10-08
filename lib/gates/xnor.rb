@@ -1,11 +1,11 @@
-require './lib/signals'
+require './lib/helpers/signals'
 require './lib/gates/nand'
 
 module Gates
   class Xnor
     attr_accessor :input_a, :input_b
 
-    include Hardware::Signals
+    include Helpers::Signals
 
     def initialize(inputs = {})
       @input_a = inputs[:input_a]
