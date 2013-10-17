@@ -27,11 +27,9 @@ class ALUTest < GateTest
   def alu
     @alu ||= Adders::ALU.new
   end
+end
 
-  def test_it_exists
-    assert Adders::ALU
-  end
-
+class XPinsTest < ALUTest
   def test_zx_high_then_output_x_low
     alu.zero_x = HIGH
     alu.input_x = Helpers::Binary.new("1111 0000 1111 0000")
@@ -62,5 +60,39 @@ class ALUTest < GateTest
     alu.zero_x = HIGH
     alu.negate_x = HIGH
     assert_equal -1, alu.output_x.to_decimal
+  end
+end
+
+class YPinsTest < ALUTest
+  def test_zy_high_then_output_y_zero
+    alu.zero_y = HIGH
+    alu.input_y = Helpers::Binary.new("1111 0000 1111 0000")
+    assert_equal Helpers::Binary.new("0000 0000 0000 0000"), alu.output_y
+  end
+
+  def test_zy_low_the_y_is_preserved
+    alu.zero_y = LOW
+    alu.input_y = Helpers::Binary.new("1111 0000 1111 0000")
+    assert_equal Helpers::Binary.new("1111 0000 1111 0000"), alu.output_y
+  end
+
+  def test_ny_high_then_output_negate_y_is_inverted
+    alu.negate_y = HIGH
+    alu.input_y = Helpers::Binary.new("0000 0000 0000 0000")
+    expected = Helpers::Binary.new("1111 1111 1111 1111")
+    assert_equal expected, alu.output_negate_y
+  end
+
+  def test_ny_low_then_output_negate_y_is_not_inverted
+    alu.negate_y = LOW
+    alu.input_y = Helpers::Binary.new("0000 0000 0000 0000")
+    expected = Helpers::Binary.new("0000 0000 0000 0000")
+    assert_equal expected, alu.output_negate_y
+  end
+
+  def test_ny_high_and_zy_high_then_output_y_negative_one
+    alu.zero_y = HIGH
+    alu.negate_y = HIGH
+    assert_equal -1, alu.output_y.to_decimal
   end
 end
