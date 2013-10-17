@@ -4,6 +4,7 @@ module Adders
   class ALU
     attr_accessor :zero_x, :negate_x, :input_x
     attr_accessor :zero_y, :negate_y, :input_y
+    attr_accessor :function, :negate_out
 
     include Helpers::Signals
 
@@ -45,6 +46,26 @@ module Adders
       else
         input_y
       end
+    end
+
+    def output_function
+      if function == HIGH
+        output_x + output_y
+      else
+        output_x & output_y
+      end
+    end
+
+    def output_negate_out
+      if negate_out == HIGH
+        output_function.inverse
+      else
+        output_function
+      end
+    end
+
+    def output
+      output_negate_out
     end
 
   private
