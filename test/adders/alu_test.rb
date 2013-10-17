@@ -201,21 +201,121 @@ class ALUIntegrationTest < ALUTest
     alu.negate_y   = LOW
     alu.function   = HIGH
     alu.negate_out = HIGH
-    alu.input_x = Helpers::Binary.new("0000 0000 0000 0111")
+    alu.input_y = Helpers::Binary.new("0000 0000 0000 0111")
     expected_decimal = -7
     assert_equal expected_decimal, alu.output.to_decimal
   end
-end
 
-# ZX NX ZY NY F NO OUTPUT
-# 1  0  1  0  1 0   0
-# 1  1  1  1  1 1   1
-# 1  1  1  0  1 0  -1
-# 0  0  1  1  0 0   x
-# 1  1  0  0  0 0   y
-# 0  0  1  1  0 1  !x
-# 1  1  0  0  0 1  !y
-# 0  0  1  1  1 1  -x
-# 1  1  0  0  1 1  -y
-# 0  1  1  1  1 1  x+1
-# more...
+  def test_data_x_inverted_and_y_zero_inverted_added_and_inverted_is_x_plus_1
+    alu.zero_x     = LOW
+    alu.negate_x   = HIGH
+    alu.zero_y     = HIGH
+    alu.negate_y   = HIGH
+    alu.function   = HIGH
+    alu.negate_out = HIGH
+    alu.input_x = Helpers::Binary.new("0000 0000 0000 1111")
+    expected = Helpers::Binary.new("0000 0000 0001 0000")
+    assert_equal expected, alu.output
+  end
+
+  def test_x_zero_inverted_and_y_data_inverted_added_and_inverted_is_y_plus_1
+    alu.zero_x     = HIGH
+    alu.negate_x   = HIGH
+    alu.zero_y     = LOW
+    alu.negate_y   = HIGH
+    alu.function   = HIGH
+    alu.negate_out = HIGH
+    alu.input_y = Helpers::Binary.new("0000 0000 0000 1111")
+    expected = Helpers::Binary.new("0000 0000 0001 0000")
+    assert_equal expected, alu.output
+  end
+
+  def test_data_x_and_y_zero_inverted_added_is_x_minus_1
+    alu.zero_x     = LOW
+    alu.negate_x   = LOW
+    alu.zero_y     = HIGH
+    alu.negate_y   = HIGH
+    alu.function   = HIGH
+    alu.negate_out = LOW
+    alu.input_x = Helpers::Binary.new("0000 0000 0001 0000")
+    expected = Helpers::Binary.new("0000 0000 0000 1111")
+    assert_equal expected, alu.output
+  end
+
+  def test_x_zero_inverted_and_y_data_added_is_y_minus_1
+    alu.zero_x     = HIGH
+    alu.negate_x   = HIGH
+    alu.zero_y     = LOW
+    alu.negate_y   = LOW
+    alu.function   = HIGH
+    alu.negate_out = LOW
+    alu.input_y = Helpers::Binary.new("0000 0000 0001 0000")
+    expected = Helpers::Binary.new("0000 0000 0000 1111")
+    assert_equal expected, alu.output
+  end
+
+  def test_data_x_and_data_y_added_is_x_plus_y
+    alu.zero_x     = LOW
+    alu.negate_x   = LOW
+    alu.zero_y     = LOW
+    alu.negate_y   = LOW
+    alu.function   = HIGH
+    alu.negate_out = LOW
+    alu.input_x = Helpers::Binary.new("0000 0000 0001 0000")
+    alu.input_y = Helpers::Binary.new("0000 0000 0001 0011")
+    expected    = Helpers::Binary.new("0000 0000 0010 0011")
+    assert_equal expected, alu.output
+  end
+
+  def test_data_x_inverted_and_data_y_added_and_inverted_is_x_minus_y
+    alu.zero_x     = LOW
+    alu.negate_x   = HIGH
+    alu.zero_y     = LOW
+    alu.negate_y   = LOW
+    alu.function   = HIGH
+    alu.negate_out = HIGH
+    alu.input_x = Helpers::Binary.new("0000 0000 0000 1110")
+    alu.input_y = Helpers::Binary.new("0000 0000 0000 0011")
+    expected    = Helpers::Binary.new("0000 0000 0000 1011")
+    assert_equal expected, alu.output
+  end
+
+  def test_data_x_and_data_y_inverted_added_and_inverted_is_y_minus_x
+    alu.zero_x     = LOW
+    alu.negate_x   = LOW
+    alu.zero_y     = LOW
+    alu.negate_y   = HIGH
+    alu.function   = HIGH
+    alu.negate_out = HIGH
+    alu.input_x = Helpers::Binary.new("0000 0000 0000 0011")
+    alu.input_y = Helpers::Binary.new("0000 0000 0000 1110")
+    expected    = Helpers::Binary.new("0000 0000 0000 1011")
+    assert_equal expected, alu.output
+  end
+
+  def test_data_x_and_data_y_anded_is_x_and_y
+    alu.zero_x     = LOW
+    alu.negate_x   = LOW
+    alu.zero_y     = LOW
+    alu.negate_y   = LOW
+    alu.function   = LOW
+    alu.negate_out = LOW
+    alu.input_x = Helpers::Binary.new("0000 0000 0001 0011")
+    alu.input_y = Helpers::Binary.new("0000 0000 0001 1001")
+    expected    = Helpers::Binary.new("0000 0000 0001 0001")
+    assert_equal expected, alu.output
+  end
+
+  def test_data_x_inverted_and_data_y_inverted_anded_inverted_is_x_or_y
+    alu.zero_x     = LOW
+    alu.negate_x   = HIGH
+    alu.zero_y     = LOW
+    alu.negate_y   = HIGH
+    alu.function   = LOW
+    alu.negate_out = HIGH
+    alu.input_x = Helpers::Binary.new("0000 0000 0001 0011")
+    alu.input_y = Helpers::Binary.new("0000 0000 0001 1001")
+    expected    = Helpers::Binary.new("0000 0000 0001 1011")
+    assert_equal expected, alu.output
+  end
+end
