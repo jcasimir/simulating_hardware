@@ -31,8 +31,36 @@ class ALUTest < GateTest
   def test_it_exists
     assert Adders::ALU
   end
+
+  def test_zx_high_then_output_x_low
+    alu.zero_x = HIGH
+    alu.input_x = Helpers::Binary.new("1111 0000 1111 0000")
+    assert_equal Helpers::Binary.new("0000 0000 0000 0000"), alu.output_x
+  end
+
+  def test_zx_low_the_x_is_preserved
+    alu.zero_x = LOW
+    alu.input_x = Helpers::Binary.new("1111 0000 1111 0000")
+    assert_equal Helpers::Binary.new("1111 0000 1111 0000"), alu.output_x
+  end
+
+  def test_nx_high_then_output_negate_x_is_inverted
+    alu.negate_x = HIGH
+    alu.input_x = Helpers::Binary.new("0000 0000 0000 0000")
+    expected = Helpers::Binary.new("1111 1111 1111 1111")
+    assert_equal expected, alu.output_negate_x
+  end
+
+  def test_nx_low_then_output_negate_x_is_not_inverted
+    alu.negate_x = LOW
+    alu.input_x = Helpers::Binary.new("0000 0000 0000 0000")
+    expected = Helpers::Binary.new("0000 0000 0000 0000")
+    assert_equal expected, alu.output_negate_x
+  end
+
+  def test_nx_high_and_zx_high_then_output_x_negative_one
+    alu.zero_x = HIGH
+    alu.negate_x = HIGH
+    assert_equal -1, alu.output_x.to_decimal
+  end
 end
-
-
-
-

@@ -4,6 +4,7 @@ gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/helpers/signals'
+require './lib/helpers/binary'
 
 class GateTest < Minitest::Test
 
