@@ -1,8 +1,3 @@
-# 0 0 => A
-# 0 1 => B
-# 1 0 => C
-# 1 1 => D
-
 require './test/test_helper'
 require './lib/mux/multiplexer'
 
