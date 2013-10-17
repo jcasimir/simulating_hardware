@@ -1,4 +1,5 @@
 require './lib/helpers/binary'
+require './lib/adders/ripple'
 
 module Adders
   class ALU
@@ -57,9 +58,15 @@ module Adders
       end
     end
 
+    def adder
+      @adder ||= Adders::Ripple.new(16)
+    end
+
     def output_function
       if function == HIGH
-        output_x + output_y
+        adder.input_a = output_x
+        adder.input_b = output_y
+        adder.output
       else
         output_x & output_y
       end
