@@ -1,4 +1,7 @@
 source "http://rubygems.org"
 
-gem 'minitest'
-gem 'pry'
+group :development, :test do
+  gem 'pry'
+  gem 'minitest'
+  gem 'guard-minitest'  
+end
