@@ -8,6 +8,15 @@ module Adders
 
     include Helpers::Signals
 
+    def output
+      output_negate_out
+    end
+
+  private
+    def sixteen_bit_zero
+      Helpers::Binary.new("0000 0000 0000 0000")
+    end
+
     def output_x
       output_negate_x
     end
@@ -63,15 +72,5 @@ module Adders
         output_function
       end
     end
-
-    def output
-      output_negate_out
-    end
-
-  private
-    def sixteen_bit_zero
-      Helpers::Binary.new("0000 0000 0000 0000")
-    end
-
   end
 end

@@ -7,111 +7,6 @@ class ALUTest < GateTest
   end
 end
 
-class XPinsTest < ALUTest
-  def test_zx_high_then_output_x_low
-    alu.zero_x = HIGH
-    alu.input_x = Helpers::Binary.new("1111 0000 1111 0000")
-    assert_equal Helpers::Binary.new("0000 0000 0000 0000"), alu.output_x
-  end
-
-  def test_zx_low_the_x_is_preserved
-    alu.zero_x = LOW
-    alu.input_x = Helpers::Binary.new("1111 0000 1111 0000")
-    assert_equal Helpers::Binary.new("1111 0000 1111 0000"), alu.output_x
-  end
-
-  def test_nx_high_then_output_negate_x_is_inverted
-    alu.negate_x = HIGH
-    alu.input_x = Helpers::Binary.new("0000 0000 0000 0000")
-    expected = Helpers::Binary.new("1111 1111 1111 1111")
-    assert_equal expected, alu.output_negate_x
-  end
-
-  def test_nx_low_then_output_negate_x_is_not_inverted
-    alu.negate_x = LOW
-    alu.input_x = Helpers::Binary.new("0000 0000 0000 0000")
-    expected = Helpers::Binary.new("0000 0000 0000 0000")
-    assert_equal expected, alu.output_negate_x
-  end
-
-  def test_nx_high_and_zx_high_then_output_x_negative_one
-    alu.zero_x = HIGH
-    alu.negate_x = HIGH
-    assert_equal -1, alu.output_x.to_decimal
-  end
-end
-
-class YPinsTest < ALUTest
-  def test_zy_high_then_output_y_zero
-    alu.zero_y = HIGH
-    alu.input_y = Helpers::Binary.new("1111 0000 1111 0000")
-    assert_equal Helpers::Binary.new("0000 0000 0000 0000"), alu.output_y
-  end
-
-  def test_zy_low_the_y_is_preserved
-    alu.zero_y = LOW
-    alu.input_y = Helpers::Binary.new("1111 0000 1111 0000")
-    assert_equal Helpers::Binary.new("1111 0000 1111 0000"), alu.output_y
-  end
-
-  def test_ny_high_then_output_negate_y_is_inverted
-    alu.negate_y = HIGH
-    alu.input_y = Helpers::Binary.new("0000 0000 0000 0000")
-    expected = Helpers::Binary.new("1111 1111 1111 1111")
-    assert_equal expected, alu.output_negate_y
-  end
-
-  def test_ny_low_then_output_negate_y_is_not_inverted
-    alu.negate_y = LOW
-    alu.input_y = Helpers::Binary.new("0000 0000 0000 0000")
-    expected = Helpers::Binary.new("0000 0000 0000 0000")
-    assert_equal expected, alu.output_negate_y
-  end
-
-  def test_ny_high_and_zy_high_then_output_y_negative_one
-    alu.zero_y = HIGH
-    alu.negate_y = HIGH
-    assert_equal -1, alu.output_y.to_decimal
-  end
-end
-
-class FunctionPinsTest < ALUTest
-  def test_f_high_adds_x_and_y
-    alu.function = HIGH
-    alu.input_x = Helpers::Binary.new("0000 0000 0000 0001")
-    alu.input_y = Helpers::Binary.new("0000 0000 0000 1111")
-    expected = Helpers::Binary.new("0000 0000 0001 0000")
-    assert_equal expected, alu.output_function
-  end
-
-  def test_f_low_ands_x_and_y
-    alu.function = LOW
-    alu.input_x = Helpers::Binary.new("0000 0000 1111 0001")
-    alu.input_y = Helpers::Binary.new("0000 0000 1000 1111")
-    expected = Helpers::Binary.new("0000 0000 1000 0001")
-    assert_equal expected, alu.output_function
-  end
-
-  def test_negate_output_high_bitwise_inverts_the_output
-    alu.negate_out = HIGH
-    alu.function = LOW
-    alu.input_x = Helpers::Binary.new("0000 0000 1111 0001")
-    alu.input_y = Helpers::Binary.new("0000 0000 1000 1111")
-    original_expected = Helpers::Binary.new("0000 0000 1000 0001")
-    expected = original_expected.inverse
-    assert_equal expected, alu.output_negate_out
-  end
-
-  def test_negate_output_low_keeps_the_function_output
-    alu.negate_out = LOW
-    alu.function = LOW
-    alu.input_x = Helpers::Binary.new("0000 0000 1111 0001")
-    alu.input_y = Helpers::Binary.new("0000 0000 1000 1111")
-    expected = Helpers::Binary.new("0000 0000 1000 0001")
-    assert_equal expected, alu.output_negate_out
-  end
-end
-
 class ALUIntegrationTest < ALUTest
   def test_zero_x_and_zero_y_added_is_zero
     alu.zero_x     = HIGH
@@ -317,5 +212,110 @@ class ALUIntegrationTest < ALUTest
     alu.input_y = Helpers::Binary.new("0000 0000 0001 1001")
     expected    = Helpers::Binary.new("0000 0000 0001 1011")
     assert_equal expected, alu.output
+  end
+end
+
+class XPinsTest < ALUTest
+  def test_zx_high_then_output_x_low
+    alu.zero_x = HIGH
+    alu.input_x = Helpers::Binary.new("1111 0000 1111 0000")
+    assert_equal Helpers::Binary.new("0000 0000 0000 0000"), alu.send(:output_x)
+  end
+
+  def test_zx_low_the_x_is_preserved
+    alu.zero_x = LOW
+    alu.input_x = Helpers::Binary.new("1111 0000 1111 0000")
+    assert_equal Helpers::Binary.new("1111 0000 1111 0000"), alu.send(:output_x)
+  end
+
+  def test_nx_high_then_output_negate_x_is_inverted
+    alu.negate_x = HIGH
+    alu.input_x = Helpers::Binary.new("0000 0000 0000 0000")
+    expected = Helpers::Binary.new("1111 1111 1111 1111")
+    assert_equal expected, alu.send(:output_negate_x)
+  end
+
+  def test_nx_low_then_output_negate_x_is_not_inverted
+    alu.negate_x = LOW
+    alu.input_x = Helpers::Binary.new("0000 0000 0000 0000")
+    expected = Helpers::Binary.new("0000 0000 0000 0000")
+    assert_equal expected, alu.send(:output_negate_x)
+  end
+
+  def test_nx_high_and_zx_high_then_output_x_negative_one
+    alu.zero_x = HIGH
+    alu.negate_x = HIGH
+    assert_equal -1, alu.send(:output_x).to_decimal
+  end
+end
+
+class YPinsTest < ALUTest
+  def test_zy_high_then_output_y_zero
+    alu.zero_y = HIGH
+    alu.input_y = Helpers::Binary.new("1111 0000 1111 0000")
+    assert_equal Helpers::Binary.new("0000 0000 0000 0000"), alu.send(:output_y)
+  end
+
+  def test_zy_low_the_y_is_preserved
+    alu.zero_y = LOW
+    alu.input_y = Helpers::Binary.new("1111 0000 1111 0000")
+    assert_equal Helpers::Binary.new("1111 0000 1111 0000"), alu.send(:output_y)
+  end
+
+  def test_ny_high_then_output_negate_y_is_inverted
+    alu.negate_y = HIGH
+    alu.input_y = Helpers::Binary.new("0000 0000 0000 0000")
+    expected = Helpers::Binary.new("1111 1111 1111 1111")
+    assert_equal expected, alu.send(:output_negate_y)
+  end
+
+  def test_ny_low_then_output_negate_y_is_not_inverted
+    alu.negate_y = LOW
+    alu.input_y = Helpers::Binary.new("0000 0000 0000 0000")
+    expected = Helpers::Binary.new("0000 0000 0000 0000")
+    assert_equal expected, alu.send(:output_negate_y)
+  end
+
+  def test_ny_high_and_zy_high_then_output_y_negative_one
+    alu.zero_y = HIGH
+    alu.negate_y = HIGH
+    assert_equal -1, alu.send(:output_y).to_decimal
+  end
+end
+
+class FunctionPinsTest < ALUTest
+  def test_f_high_adds_x_and_y
+    alu.function = HIGH
+    alu.input_x = Helpers::Binary.new("0000 0000 0000 0001")
+    alu.input_y = Helpers::Binary.new("0000 0000 0000 1111")
+    expected = Helpers::Binary.new("0000 0000 0001 0000")
+    assert_equal expected, alu.send(:output_function)
+  end
+
+  def test_f_low_ands_x_and_y
+    alu.function = LOW
+    alu.input_x = Helpers::Binary.new("0000 0000 1111 0001")
+    alu.input_y = Helpers::Binary.new("0000 0000 1000 1111")
+    expected = Helpers::Binary.new("0000 0000 1000 0001")
+    assert_equal expected, alu.send(:output_function)
+  end
+
+  def test_negate_output_high_bitwise_inverts_the_output
+    alu.negate_out = HIGH
+    alu.function = LOW
+    alu.input_x = Helpers::Binary.new("0000 0000 1111 0001")
+    alu.input_y = Helpers::Binary.new("0000 0000 1000 1111")
+    original_expected = Helpers::Binary.new("0000 0000 1000 0001")
+    expected = original_expected.inverse
+    assert_equal expected, alu.send(:output_negate_out)
+  end
+
+  def test_negate_output_low_keeps_the_function_output
+    alu.negate_out = LOW
+    alu.function = LOW
+    alu.input_x = Helpers::Binary.new("0000 0000 1111 0001")
+    alu.input_y = Helpers::Binary.new("0000 0000 1000 1111")
+    expected = Helpers::Binary.new("0000 0000 1000 0001")
+    assert_equal expected, alu.send(:output_negate_out)
   end
 end
