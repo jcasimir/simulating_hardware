@@ -90,4 +90,19 @@ class BinaryTest < GateTest
       a + b
     end
   end
+
+  def test_it_bitwise_ands_numbers
+    a = Helpers::Binary.new('0111')
+    b = Helpers::Binary.new('1101')
+    expected = Helpers::Binary.new('0101')
+    assert_equal expected, a & b
+  end
+
+  def test_it_only_ands_like_sized_numbers
+    a = Helpers::Binary.new('1111')
+    b = Helpers::Binary.new('01')
+    assert_raises ArgumentError do
+      a & b
+    end
+  end
 end

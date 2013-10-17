@@ -74,6 +74,22 @@ module Helpers
       Binary.new(result.reverse.join)
     end
 
+    def &(other)
+      unless self.size == other.size
+        raise ArgumentError.new("numbers to be anded must have the same number of bits")
+      end
+
+      bit_pairs = bits.zip(other.bits)
+      result = bit_pairs.collect do |a, b|
+        if a == 1 && b == 1
+          1
+        else
+          0
+        end
+      end
+      Binary.new(result.reverse.join)
+    end
+
   private
     def convert(bit)
       if bit.to_i == HIGH
