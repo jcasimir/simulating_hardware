@@ -1,3 +1,5 @@
+require './lib/adders/full'
+
 module Adders
   class Ripple
     attr_reader :size, :input_a, :input_b
