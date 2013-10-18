@@ -58,12 +58,9 @@ module Adders
       end
     end
 
-    def adder
-      @adder ||= Adders::Ripple.new(16)
-    end
-
     def output_function
       if function == HIGH
+        adder = Adders::Ripple.new(16)
         adder.input_a = output_x
         adder.input_b = output_y
         adder.output
@@ -81,3 +78,17 @@ module Adders
     end
   end
 end
+
+# def adder
+#   @adder ||= Adders::Ripple.new(16)
+# end
+
+# def output_function
+#   if function == HIGH
+#     adder.input_a = output_x
+#     adder.input_b = output_y
+#     adder.output
+#   else
+#     output_x & output_y
+#   end
+# end
