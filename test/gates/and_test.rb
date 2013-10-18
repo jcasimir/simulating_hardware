@@ -29,5 +29,4 @@ class AndGateTest < GateTest
     gate.input_b = HIGH
     assert_high gate.output
   end
-
 end
