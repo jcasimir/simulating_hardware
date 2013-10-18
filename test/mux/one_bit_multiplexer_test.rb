@@ -14,6 +14,7 @@ class OneBitMultiplexer < GateTest
   end
 
   def test_high_a_and_low_control_outputs_high
+    skip
     mux.input_a = HIGH
     mux.input_b = LOW
     mux.control = LOW
@@ -21,6 +22,7 @@ class OneBitMultiplexer < GateTest
   end
 
   def test_high_b_and_low_control_outputs_low
+    skip
     mux.input_a = LOW
     mux.input_b = HIGH
     mux.control = LOW

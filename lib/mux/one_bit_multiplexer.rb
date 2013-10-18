@@ -1,4 +1,6 @@
 require './lib/gates/not'
+require './lib/gates/or'
+require './lib/gates/and'
 
 module Mux
   class OneBitMultiplexer
