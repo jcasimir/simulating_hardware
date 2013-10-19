@@ -1,7 +1,7 @@
 require './lib/gates/and'
 
 module Gates
-  class AndMultibit
+  class AndMultibitToOne
     attr_reader :size
     attr_accessor :input
 
