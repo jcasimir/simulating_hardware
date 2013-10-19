@@ -1,5 +1,7 @@
 require './lib/helpers/binary'
 require './lib/adders/ripple'
+require './lib/gates/and_multibit'
+require './lib/mux/one_bit_multiplexer'
 
 module Adders
   class ALU
@@ -59,14 +61,34 @@ module Adders
     end
 
     def output_function
+      # mux = OneBitMultiplexer.new
+      # mux.input_a = output_x_and_output_y.output
+      # mux.input_b = output_x_plus_output_y
+      # mux.control = function
+      # mux.output
       if function == HIGH
-        adder = Adders::Ripple.new(16)
-        adder.input_a = output_x
-        adder.input_b = output_y
-        adder.output
+        output_x_plus_output_y.output
       else
-        output_x & output_y
+        output_x_and_output_y.output        
       end
+    end
+
+    def output_x_plus_output_y
+      adder = Adders::Ripple.new(16)
+      adder.input_a = output_x
+      adder.input_b = output_y
+      adder
+    end
+
+    def output_x_and_output_y
+      @ander_output_x_and_output_y ||= ander_output_x_output_y
+    end
+
+    def ander_output_x_output_y
+      ander = Gates::AndMultibit.new(16)
+      ander.input_a = output_x
+      ander.input_b = output_y
+      ander
     end
 
     def output_negate_out
