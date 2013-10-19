@@ -1,6 +1,7 @@
 require './lib/helpers/binary'
 require './lib/adders/ripple'
 require './lib/gates/and_multibit'
+require './lib/gates/inverter'
 require './lib/mux/one_bit_multiplexer'
 
 module Adders
@@ -34,7 +35,9 @@ module Adders
 
     def output_negate_x
       if negate_x == HIGH
-        output_zero_x.inverse
+        inverter = Gates::Inverter.new(16)
+        inverter.input = output_zero_x
+        inverter.output
       else
         output_zero_x
       end
@@ -46,7 +49,9 @@ module Adders
 
     def output_negate_y
       if negate_y == HIGH
-        output_zero_y.inverse
+        inverter = Gates::Inverter.new(16)
+        inverter.input = output_zero_y
+        inverter.output
       else
         output_zero_y
       end
@@ -93,24 +98,12 @@ module Adders
 
     def output_negate_out
       if negate_out == HIGH
-        output_function.inverse
+        inverter = Gates::Inverter.new(16)
+        inverter.input = output_function
+        inverter.output
       else
         output_function
       end
     end
   end
 end
-
-# def adder
-#   @adder ||= Adders::Ripple.new(16)
-# end
-
-# def output_function
-#   if function == HIGH
-#     adder.input_a = output_x
-#     adder.input_b = output_y
-#     adder.output
-#   else
-#     output_x & output_y
-#   end
-# end
