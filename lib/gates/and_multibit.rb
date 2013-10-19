@@ -18,25 +18,20 @@ module Gates
   private
 
     def gates
-      puts "Building gates for #{input.bits}"
-      @gates ||= build_gates(input.bits)
+      @gates ||= build_gates((0...size).to_a)
     end
 
-    def build_gates(bits)
-      puts "  Sub gates for #{bits}"
+    def build_gates(bit_positions)
       gate = Gates::And.new
 
-      if bits.count == 2
-        gate.input_a = bits[1]
-        gate.input_b = bits[0]
+      if bit_positions.count == 2
+        gate.input_a = lambda { input.bits[bit_positions[1]] }
+        gate.input_b = lambda { input.bits[bit_positions[0]] }
       else
-        left  = bits[0...bits.count/2]
-        right = bits[bits.count/2..-1]
+        left, right = bit_positions.each_slice( (bit_positions.size/2) ).to_a
         gate.input_a = build_gates(left)
         gate.input_b = build_gates(right)
       end
-
-      puts "  Built #{ gate.inspect }"
 
       return gate
     end
