@@ -23,17 +23,24 @@ class AndMultibitGateTest < GateTest
   end
 
   def test_it_is_high_with_all_inputs_high
-    skip
     gate.input = Helpers::Binary.new("11111111")
     assert_high gate.output
   end
 
   def test_it_is_low_with_any_low_input
-    skip
     inputs = ["0111 1111", "1100 1100", "0000 0000", "0000 0001"]
     inputs.each do |input|
       gate.input = Helpers::Binary.new(input)
       assert_low gate.output
     end
+  end
+
+  def test_it_handles_changing_manybit_input
+    gate.input = Helpers::Binary.new("11111111")
+    assert_high gate.output
+    gate.input = Helpers::Binary.new("1100 1100")
+    assert_low gate.output
+    gate.input = Helpers::Binary.new("11111111")
+    assert_high gate.output
   end
 end
