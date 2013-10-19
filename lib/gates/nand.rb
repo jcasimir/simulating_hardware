@@ -12,24 +12,7 @@ module Gates
     end
 
     def output
-      !((value_a == HIGH) && (value_b == HIGH)) ? HIGH : LOW
-    end
-
-  private
-    def value_a
-      if input_a.respond_to?(:call)
-        input_a.call
-      else
-        input_a
-      end
-    end
-
-    def value_b
-      if input_b.respond_to?(:call)
-        input_b.call
-      else
-        input_b
-      end
+      !((value_of(input_a) == HIGH) && (value_of(input_b) == HIGH)) ? HIGH : LOW
     end
   end
 end
