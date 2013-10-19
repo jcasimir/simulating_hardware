@@ -29,8 +29,8 @@ module Gates
         gate.input_b = lambda { input.bits[bit_positions[0]] }
       else
         left, right = bit_positions.each_slice( (bit_positions.size/2) ).to_a
-        gate.input_a = build_gates(left)
-        gate.input_b = build_gates(right)
+        gate.input_a = lambda { build_gates(left).output }
+        gate.input_b = lambda { build_gates(right).output }
       end
 
       return gate
