@@ -5,7 +5,7 @@ module Memory
     include Helpers::Signals
 
     attr_accessor :input
-    attr_reader :output, :clock
+    attr_reader :clock
 
     def initialize(input_clock)
       @clock = input_clock
@@ -13,8 +13,11 @@ module Memory
     end
 
     def tick
-      #gate_output
-      @output = input
+      @next_out = input
+    end
+
+    def output
+      value_of(@next_out)
     end
 
   private
