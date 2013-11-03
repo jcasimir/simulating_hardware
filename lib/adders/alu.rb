@@ -76,29 +76,29 @@ module Adders
     end
 
     def output_function
-      mux = Mux::MultiplexerMultibit.new(16)
-      mux.input_a = output_x_and_output_y.output
-      mux.input_b = output_x_plus_output_y.output
-      mux.control = function
-      mux.output
+      gates_for_output_function.output
     end
 
-    def output_x_plus_output_y
-      adder = Adders::Ripple.new(16)
-      adder.input_a = output_x
-      adder.input_b = output_y
-      adder
+    def gates_for_output_function
+      @gates_for_output_function ||= Mux::MultiplexerMultibit.new(16).tap do |mux|
+        mux.input_a = gates_for_output_x_and_output_y.output
+        mux.input_b = gates_for_output_x_plus_output_y.output
+        mux.control = function
+      end
     end
 
-    def output_x_and_output_y
-      @ander_output_x_and_output_y ||= ander_output_x_output_y
+    def gates_for_output_x_plus_output_y
+      @gates_for_output_x_plus_output_y ||= Adders::Ripple.new(16).tap do |adder|
+        adder.input_a = output_x
+        adder.input_b = output_y
+      end
     end
 
-    def ander_output_x_output_y
-      ander = Gates::AndMultibit.new(16)
-      ander.input_a = output_x
-      ander.input_b = output_y
-      ander
+    def gates_for_output_x_and_output_y
+      @gates_for_output_x_and_output_y ||= Gates::AndMultibit.new(16).tap do |ander|
+        ander.input_a = output_x
+        ander.input_b = output_y
+      end
     end
 
     def output_negate_out
