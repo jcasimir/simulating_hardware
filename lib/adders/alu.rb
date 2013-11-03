@@ -26,11 +26,15 @@ module Adders
     end
 
     def output_zero_x
-      mux = Mux::MultiplexerMultibit.new(16)
-      mux.input_a = input_x
-      mux.input_b = sixteen_bit_zero
-      mux.control = zero_x
-      mux.output
+      gates_for_output_zero_x.output
+    end
+
+    def gates_for_output_zero_x
+      @gates_for_output_zero_x ||= Mux::MultiplexerMultibit.new(16).tap do |mux|
+        mux.input_a = input_x
+        mux.input_b = sixteen_bit_zero
+        mux.control = zero_x
+      end
     end
 
     def output_negate_x
@@ -60,11 +64,15 @@ module Adders
     end
 
     def output_zero_y
-      mux = Mux::MultiplexerMultibit.new(16)
-      mux.input_a = input_y
-      mux.input_b = sixteen_bit_zero
-      mux.control = zero_y
-      mux.output
+      gates_for_output_zero_y.output
+    end
+
+    def gates_for_output_zero_y
+      @gates_for_output_zero_y ||= Mux::MultiplexerMultibit.new(16).tap do |mux|
+        mux.input_a = input_y
+        mux.input_b = sixteen_bit_zero
+        mux.control = zero_y
+      end
     end
 
     def output_function
