@@ -48,13 +48,14 @@ module Adders
     end
 
     def output_negate_y
-      if negate_y == HIGH
-        inverter = Gates::Inverter.new(16)
-        inverter.input = output_zero_y
-        inverter.output
-      else
-        output_zero_y
-      end
+      inverter = Gates::Inverter.new(16)
+      inverter.input = output_zero_y
+
+      mux = Mux::MultiplexerMultibit.new(16)
+      mux.input_a = output_zero_y
+      mux.input_b = inverter.output
+      mux.control = negate_y
+      mux.output
     end
 
     def output_zero_y
