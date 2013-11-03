@@ -66,11 +66,11 @@ module Adders
     end
 
     def output_function
-      if function == HIGH
-        output_x_plus_output_y.output
-      else
-        output_x_and_output_y.output        
-      end
+      mux = Mux::MultiplexerMultibit.new(16)
+      mux.input_a = output_x_and_output_y.output
+      mux.input_b = output_x_plus_output_y.output
+      mux.control = function
+      mux.output
     end
 
     def output_x_plus_output_y
