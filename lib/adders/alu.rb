@@ -92,13 +92,14 @@ module Adders
     end
 
     def output_negate_out
-      if negate_out == HIGH
-        inverter = Gates::Inverter.new(16)
-        inverter.input = output_function
-        inverter.output
-      else
-        output_function
-      end
+      inverter = Gates::Inverter.new(16)
+      inverter.input = output_function
+
+      mux = Mux::MultiplexerMultibit.new(16)
+      mux.input_a = output_function
+      mux.input_b = inverter.output
+      mux.control = negate_out
+      mux.output
     end
   end
 end
