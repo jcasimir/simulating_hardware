@@ -6,11 +6,21 @@ require './lib/mux/multiplexer_multibit'
 
 module Adders
   class ALU
-    attr_accessor :zero_x, :negate_x, :input_x
-    attr_accessor :zero_y, :negate_y, :input_y
-    attr_accessor :function, :negate_out
-
     include Helpers::Signals
+
+    def self.input_pins
+     [:zero_x, :negate_x, :input_x,
+      :zero_y, :negate_y, :input_y,
+      :function, :negate_out]
+    end
+
+    attr_writer *input_pins
+
+    input_pins.each do |pin|
+      define_method pin do
+        lambda{ instance_variable_get("@#{pin}") }  
+      end
+    end
 
     def output
       output_negate_out
