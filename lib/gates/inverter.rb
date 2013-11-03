@@ -29,8 +29,8 @@ module Gates
     def build_gates
       (0...size).collect do |bit|
         gate = Gates::Nand.new
-        gate.input_a = lambda{ input.bits[bit] }
-        gate.input_b = lambda{ input.bits[bit] }
+        gate.input_a = lambda{ value_of(input).bits[bit] }
+        gate.input_b = lambda{ value_of(input).bits[bit] }
         gate
       end
     end

@@ -28,8 +28,8 @@ module Gates
     def build_gates
       (0...size).collect do |bit|
         gate = Gates::And.new
-        gate.input_a = lambda{ input_a.bits[bit] }
-        gate.input_b = lambda{ input_b.bits[bit] }
+        gate.input_a = lambda{ value_of(input_a).bits[bit] }
+        gate.input_b = lambda{ value_of(input_b).bits[bit] }
         gate  
       end
     end

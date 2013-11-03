@@ -41,8 +41,8 @@ module Adders
       adders = []
       size.times do |i|
         adders[i] = Adders::Full.new
-        adders[i].input_a = input_a.bits[i]
-        adders[i].input_b = input_b.bits[i]
+        adders[i].input_a = value_of(input_a).bits[i]
+        adders[i].input_b = value_of(input_b).bits[i]
         if i == 0
           adders[i].carry_in = LOW
         else
