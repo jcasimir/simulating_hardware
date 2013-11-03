@@ -8,7 +8,9 @@ module Gates
     include Helpers::Signals
 
     def initialize(input = LOW)
-      raise ArgumentError.new("Invalid input") unless SIGNALS.include?(input)
+      unless SIGNALS.include?(input)
+        raise ArgumentError.new("Invalid input: #{input.inspect}") 
+      end
       @input = input
     end
 

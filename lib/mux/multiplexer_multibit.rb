@@ -3,7 +3,17 @@ require './lib/mux/one_bit_multiplexer'
 module Mux
   class MultiplexerMultibit
     attr_reader :size
-    attr_accessor :control, :input_a, :input_b
+    attr_accessor :input_a, :input_b
+
+    include Helpers::Signals
+
+    def control=(control_in)
+      @control = control_in
+    end
+
+    def control
+      value_of(@control)
+    end
 
     def initialize(bit_size)
       @size = bit_size
@@ -28,7 +38,11 @@ module Mux
         mux = Mux::OneBitMultiplexer.new
         mux.input_a = lambda{ input_a.bits[bit] }
         mux.input_b = lambda{ input_b.bits[bit] }
-        mux.control = lambda{ control }
+        if control.respond_to?(:call)
+          mux.control = control
+        else
+          mux.control = lambda{ control }
+        end
         mux  
       end
     end

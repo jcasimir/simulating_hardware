@@ -8,6 +8,11 @@ class ALUTest < GateTest
 end
 
 class ALUIntegrationTest < ALUTest
+  def setup
+    alu.input_x = Helpers::Binary.new("0000 0000 0000 0000")
+    alu.input_y = Helpers::Binary.new("0000 0000 0000 0000")
+  end
+
   def test_zero_x_and_zero_y_added_is_zero
     alu.zero_x     = HIGH
     alu.negate_x   = LOW
@@ -216,6 +221,11 @@ class ALUIntegrationTest < ALUTest
 end
 
 class XPinsTest < ALUTest
+  def setup
+    alu.zero_x = LOW
+    alu.input_x = Helpers::Binary.new("0000 0000 0000 0000")
+  end
+
   def test_zx_high_then_output_x_low
     alu.zero_x = HIGH
     alu.input_x = Helpers::Binary.new("1111 0000 1111 0000")
@@ -284,6 +294,10 @@ class YPinsTest < ALUTest
 end
 
 class FunctionPinsTest < ALUTest
+  def setup
+    alu.zero_x = LOW
+  end
+
   def test_f_high_adds_x_and_y
     alu.function = HIGH
     alu.input_x = Helpers::Binary.new("0000 0000 0000 0001")

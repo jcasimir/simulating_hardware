@@ -2,7 +2,7 @@ require './lib/helpers/binary'
 require './lib/adders/ripple'
 require './lib/gates/and_multibit'
 require './lib/gates/inverter'
-require './lib/mux/one_bit_multiplexer'
+require './lib/mux/multiplexer_multibit'
 
 module Adders
   class ALU
@@ -26,11 +26,11 @@ module Adders
     end
 
     def output_zero_x
-      if zero_x == HIGH
-        sixteen_bit_zero
-      else
-        input_x
-      end
+      mux = Mux::MultiplexerMultibit.new(16)
+      mux.input_a = input_x
+      mux.input_b = sixteen_bit_zero
+      mux.control = zero_x
+      mux.output
     end
 
     def output_negate_x
