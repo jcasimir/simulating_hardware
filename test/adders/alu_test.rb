@@ -260,6 +260,11 @@ class XPinsTest < ALUTest
 end
 
 class YPinsTest < ALUTest
+  def setup
+    alu.zero_y = LOW
+    alu.input_y = Helpers::Binary.new("0000 0000 0000 0000")
+  end
+
   def test_zy_high_then_output_y_zero
     alu.zero_y = HIGH
     alu.input_y = Helpers::Binary.new("1111 0000 1111 0000")
@@ -296,6 +301,7 @@ end
 class FunctionPinsTest < ALUTest
   def setup
     alu.zero_x = LOW
+    alu.zero_y = LOW
   end
 
   def test_f_high_adds_x_and_y

@@ -58,19 +58,14 @@ module Adders
     end
 
     def output_zero_y
-      if zero_y == HIGH
-        sixteen_bit_zero
-      else
-        input_y
-      end
+      mux = Mux::MultiplexerMultibit.new(16)
+      mux.input_a = input_y
+      mux.input_b = sixteen_bit_zero
+      mux.control = zero_y
+      mux.output
     end
 
     def output_function
-      # mux = OneBitMultiplexer.new
-      # mux.input_a = output_x_and_output_y.output
-      # mux.input_b = output_x_plus_output_y
-      # mux.control = function
-      # mux.output
       if function == HIGH
         output_x_plus_output_y.output
       else
