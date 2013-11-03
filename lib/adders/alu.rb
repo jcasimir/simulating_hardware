@@ -38,14 +38,18 @@ module Adders
     end
 
     def output_negate_x
-      inverter = Gates::Inverter.new(16)
-      inverter.input = output_zero_x
+      gates_for_output_negate_x.output
+    end
 
-      mux = Mux::MultiplexerMultibit.new(16)
-      mux.input_a = output_zero_x
-      mux.input_b = inverter.output
-      mux.control = negate_x
-      mux.output
+    def gates_for_output_negate_x
+      @gates_for_output_negate_x ||= Mux::MultiplexerMultibit.new(16).tap do |mux|
+        inverter = Gates::Inverter.new(16)
+        inverter.input = output_zero_x
+
+        mux.input_a = output_zero_x
+        mux.input_b = inverter.output
+        mux.control = negate_x
+      end
     end
 
     def output_y
@@ -53,14 +57,18 @@ module Adders
     end
 
     def output_negate_y
-      inverter = Gates::Inverter.new(16)
-      inverter.input = output_zero_y
+      gates_for_output_negate_y.output
+    end
 
-      mux = Mux::MultiplexerMultibit.new(16)
-      mux.input_a = output_zero_y
-      mux.input_b = inverter.output
-      mux.control = negate_y
-      mux.output
+    def gates_for_output_negate_y
+      @gates_for_output_negate_y ||= Mux::MultiplexerMultibit.new(16).tap do |mux|
+        inverter = Gates::Inverter.new(16)
+        inverter.input = output_zero_y
+
+        mux.input_a = output_zero_y
+        mux.input_b = inverter.output
+        mux.control = negate_y
+      end
     end
 
     def output_zero_y
@@ -102,14 +110,19 @@ module Adders
     end
 
     def output_negate_out
-      inverter = Gates::Inverter.new(16)
-      inverter.input = output_function
+      gates_for_negate_out.output
+    end
 
-      mux = Mux::MultiplexerMultibit.new(16)
-      mux.input_a = output_function
-      mux.input_b = inverter.output
-      mux.control = negate_out
-      mux.output
+    def gates_for_negate_out
+      @gates_for_negate_out ||= Mux::MultiplexerMultibit.new(16).tap do |mux|
+        inverter = Gates::Inverter.new(16)
+        inverter.input = output_function
+        
+        mux.input_a = output_function
+        mux.input_b = inverter.output
+        mux.control = negate_out
+        mux.output
+      end
     end
   end
 end
